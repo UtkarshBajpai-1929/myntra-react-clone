@@ -1,0 +1,39 @@
+import { MdAddShoppingCart } from "react-icons/md";
+import { IoTrashBinOutline } from "react-icons/io5";
+import { useDispatch, useSelector } from "react-redux";
+import { bagActions } from "../Store/bagSlice";
+import { wishlistActions } from "../Store/wishlistSlice";
+export const WishlistItem = ({item})=>{
+    const dispatch = useDispatch();
+    const bagitems = useSelector(store=>store.bag);
+    const itemFound = bagitems.indexOf(item.id)>=0;
+    const handleAddToBag = ()=>{
+        dispatch(bagActions.addToBag(item.id));
+    }
+    const handleRemove = ()=>{
+        dispatch(wishlistActions.removeFromWishlist(item.id))
+    }
+    return(
+         <div className="item-container">
+              <img className="item-image" src={item.image} alt="item image"/>
+              <div className="rating">
+                  {item.rating.stars} ⭐ | {item.rating.count}
+              </div>
+              <div className="company-name">{item.company}</div>
+              <div className="item-name">{item.item_name}</div>
+              <div className="price">
+                  <span className="current-price">Rs {item.current_price}</span>
+                  <span className="original-price">Rs {item.original_price}</span>
+                  <span className="discount">({item.discount_percentage}% OFF)</span>
+              </div>
+              {
+                itemFound?  <button onClick={handleRemove} type="button" className="btn-add-bag btn btn-danger"><IoTrashBinOutline /> &nbsp; Remove</button>:
+                 <button onClick={handleAddToBag} className="btn-add-bag"><MdAddShoppingCart /> &nbsp; Add to Bag</button>
+              }
+                  
+           
+        
+            </div>
+    )
+
+}
