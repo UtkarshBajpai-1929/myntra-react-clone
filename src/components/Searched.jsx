@@ -2,7 +2,7 @@ import {useSelector } from "react-redux"
 import { HomeItem } from "./HomeItem";
 import Sorry from "./Sorry";
 export const Searched = ()=>{
-    const search = useSelector(store=> store.input.query);
+    const search = useSelector(store=> store.input.query.toLowerCase());
     const items = useSelector(store=>store.items);
     const finalItems = items.filter(item => item.key.includes(search));
     return(
